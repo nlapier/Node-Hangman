@@ -11,10 +11,10 @@
 var game = require("./game.js");
 var word = require("./word.js");
 var letter = require("./letter.js");
-var inquire = require("inquirer");
+var inquirer = require("inquirer");
 
 //Game Variables
-var question = [{
+var questions = [{
   name: "guess",
   message: "Guess a letter"
 }]
@@ -30,27 +30,27 @@ var game = {
 	wordList: ["abstract", "aesthetic", "alleviate", "ambivalent", "apathetic", "auspicious", "benevolent",
 	 "candor", "cogent", "comprehensive", "contemporary", "conviction", "diligent", "dubious", "eclectic", "egregious",
 	 "exculpate", "florid", "gratuitous", "hackneyed"],
-	randomWord: function(){return this.wordList[this.randomInt(0, this.wordList.length)]},
+	randomWordMachine: function(){return this.wordList[this.randomInt(0, this.wordList.length)]},
 	randomInt: function(min, max){return Math.floor(Math.random() * (max - min + 1)) + min}
 }
 //******************GAME**********************
 //******************WORD**********************
 // "word.js should contain all of the methods which will check the letters guessed versus the random word selected."
 
-function Word(randomWord){
-	this.randomWord = randomWord,
+function Word(word){
+	this.word = word,
 	this.displayWord = ""
-	this.guessesLeft = Math.floor(randomWord.length*1.5)
+	this.guessesLeft = Math.floor(word.length*1.5)
 }
 
 Word.prototype.letterize = function(){
-	for (var i = 0; i < this.randomWord.length; i++){
-		this[i] = new Letter(this.randomWord[i]);
+	for (var i = 0; i < this.word.length; i++){
+		this[i] = new Letter(this.word[i]);
 	}
 }
 
 Word.prototype.checkGuessLoop = function(userGuess){
-	for (var i = 0; i < this.randomWord.length; i++){
+	for (var i = 0; i < this.word.length; i++){
 		this[i].checkGuess(userGuess)
 	}
 	this.guessesLeft--;
@@ -58,7 +58,7 @@ Word.prototype.checkGuessLoop = function(userGuess){
 
 Word.prototype.updateDispayWord = function(){
 	this.displayWord = "";
-	for (var i = 0; i < this.randomWord.length; i++){
+	for (var i = 0; i < this.word.length; i++){
 		this.displayWord += this[i].display()
 	}
 }
@@ -90,7 +90,7 @@ Letter.prototype.checkGuess = function(userGuess){
 
 
 function mainFunc(){
-	if (wordObj.randomWord === wordObj.displayWord){
+	if (wordObj.word === wordObj.displayWord){
 		console.log("You Win!")
 		return;
 	}
@@ -112,11 +112,13 @@ function mainFunc(){
 //******************RUN GAME**********************
 
 
-randomWord = game.randomWord();
+randomWord = game.randomWordMachine();
 
 wordObj = new Word(randomWord);
 
 wordObj.letterize();
+
+wordObj.updateDispayWord();
 
 wordObj.displayStats();
 
