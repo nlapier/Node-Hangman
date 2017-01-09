@@ -1,2 +1,3 @@
-# Week11-hangman
-Homework: a node-based hangman game with recursive functions.
+# Node Hangman
+Homework: An object-oriented, node-based hangman game with recursive functions.  
+
