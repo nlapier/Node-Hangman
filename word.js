@@ -5,7 +5,7 @@ var Letter = require("./letter.js");
 
 function Word(word){
 	this.word = word,
-	this.displayWord = ""
+	this.displayWord = "",
 	this.guessesLeft = Math.floor(word.length*1.5)
 }
 
